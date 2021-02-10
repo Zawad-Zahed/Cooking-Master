@@ -5,7 +5,7 @@ const searchMeals = () => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayMeals(data.meals))
-        .catch(error => displayError('Please write some food name >_<'));
+        .catch(error => displayError('Write a Food name Please >_<'));
 }
 
 
@@ -18,19 +18,29 @@ const displayMeals = meals => {
         const mealInfo = `
             <img src="${mealName.strMealThumb}">
             <h3>${mealName.strMeal}</h3>
-            <button onclick="getMealFullInfo('${mealName.strMeal}','${mealName.strMeasure1}')" type='button' class="btn btn-gray">haw</button>
+            <button onclick="MealsInfo"('${mealName.strMeal}','${mealName.strMeasure1}') class="btn btn-gray">More Info</button>
             `;
             mealDiv.innerHTML = mealInfo;
             mealContainer.appendChild(mealDiv);
     })
 }
 
-const getMealFullInfo = async (name, ingredient) => {
- const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${name},${ingredient}`;
+const getMealsInfo = (name, ingredient) => {
+ const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${name},${ingredient}`;
  fetch(url)
 .then(res => res.json())
-.then(data => console.log(data))
+.then(data => console.log(data[0].name, ingredient))
  };
+
+ const fullMealsInfo = meal => {
+     const mealDiv = document.getElementById('MealsInfo');
+     mealDiv.innerHTML = `
+     <h3>mealName.strMeal</h3>
+     <p>mealCategory.strCategory</p>
+     <p>mealCountry.strArea</p>
+     
+     `
+ }
 
 const displayError = error => {
 const errorTag = document.getElementById('error-message');
